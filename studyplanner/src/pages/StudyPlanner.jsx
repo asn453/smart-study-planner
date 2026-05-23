@@ -9,7 +9,7 @@ function StudyPlanner() {
 
   const fetchData = async () => {
     try {
-      const response = await api.get("api/planner/");
+      const response = await api.get("/api/planner/");
       setPlans(response.data);
     } catch (error) {
       console.log(error);
@@ -27,7 +27,7 @@ function StudyPlanner() {
     }
 
     try {
-      await api.post("api/planner/", {
+      await api.post("/api/planner/", {
         subject,
         topic,
       });
@@ -51,7 +51,7 @@ function StudyPlanner() {
     }
 
     try {
-      await api.delete(`api/planner/${item.id}/`);
+      await api.delete(`/api/planner/${item.id}/`);
 
       fetchData();
     } catch (error) {

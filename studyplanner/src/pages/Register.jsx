@@ -17,7 +17,7 @@ function Register() {
     e.preventDefault();
 
     try {
-      await api.post("api/register/", data);
+      await api.post("/api/register/", data);
 
       alert("Registration Successful");
 

@@ -35,7 +35,9 @@ class Quiz(ModelViewSet):
             return Response({'quiz':quiz})
 
         except Exception as e:
-            return Response({'error':'Gemini is busy. Try again later.'},
-            status=status.HTTP_503_SERVICE_UNAVAILABLE
-
-        )
+            return Response(
+        {
+            'error': str(e)
+        },
+        status=status.HTTP_500_INTERNAL_SERVER_ERROR
+    )

@@ -1,12 +1,17 @@
-import os 
+import os
 from dotenv import load_dotenv
 from google import genai
 
 load_dotenv()
 
-client = genai.Client() 
+client = genai.Client(
+    api_key=os.getenv(
+        "GEMINI_API_KEY"
+    )
+)
 
 def generate_quiz(topic):
+
     prompt = f"""
     Create exactly 5 MCQ questions about {topic}
 
@@ -26,5 +31,5 @@ def generate_quiz(topic):
         model="gemini-2.5-flash",
         contents=prompt
     )
-    
+
     return response.text

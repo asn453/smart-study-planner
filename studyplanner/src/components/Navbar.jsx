@@ -46,7 +46,7 @@ function Navbar() {
           {token ? (<button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl font-medium text-white shadow-md hover:shadow-red-500/40 transition-all duration-300">
               Logout
             </button>) 
-            : (<Link to="/" className="bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl text-white">Login</Link>)}
+            : (<Link to="/login" className="bg-blue-500 hover:bg-blue-600 px-5 py-2 rounded-xl text-white">Login</Link>)}
         </div>
       </div>
     </nav>

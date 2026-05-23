@@ -16,7 +16,7 @@ function Quiz() {
     try {
       setLoading(true);
 
-      const response = await api.post("quiz/generate/", {
+      const response = await api.post("/api/quiz/generate/", {
         topic,
       });
 
@@ -35,17 +35,19 @@ function Quiz() {
         setQuiz(questions);
       }
     } catch (error) {
-      console.log(error);
 
-      if (error.response) {
-        console.log(error.response.data);
-      }
+    console.log(
+        error.response?.data
+    )
 
-      alert("Failed to generate quiz");
-    } finally {
-      setLoading(false);
-    }
-  };
+    alert(
+        JSON.stringify(
+            error.response?.data
+        )
+    )
+  }
+
+}
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">

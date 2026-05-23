@@ -9,7 +9,7 @@ function PdfManager() {
 
   const fetchPdf = async () => {
     try {
-      const response = await api.get("pdf/");
+      const response = await api.get("/api/pdf/");
       setPdfs(response.data);
     } catch (error) {
       console.log(error);
@@ -32,7 +32,7 @@ function PdfManager() {
     formData.append("pdf", file);
 
     try {
-      await api.post("pdf/", formData, {
+      await api.post("/api/pdf/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

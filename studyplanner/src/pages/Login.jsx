@@ -21,9 +21,10 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await api.post("login/", data);
+      const response = await api.post("api/login/", data);
 
       localStorage.setItem("token", response.data.access);
+      localStorage.setItem("refresh",response.data.refresh);
 
       navigate("/dashboard");
     } catch (error) {

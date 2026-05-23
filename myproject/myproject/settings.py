@@ -143,7 +143,7 @@ REST_FRAMEWORK = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "https://smart-study-planner-5wp3czfwx.vercel.app",
+    "",
 ]
 
 CSRF_TRUSTED_ORIGINS = [

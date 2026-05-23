@@ -2,7 +2,7 @@ import "./App.css";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/Temp";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
@@ -11,6 +11,7 @@ import Quiz from "./pages/Quiz";
 import PdfManager from "./pages/PdfManager";
 
 import PrivateRoute from "./components/PrivateRoute";
+import Homepage from "./pages/Homepage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
 
         <Route
           path="/"
-          element={<Temp />}
+          element={<Homepage />}
         />
 
         <Route

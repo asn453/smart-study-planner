@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-function Home() {
+
+function Homepage() {
   return (
-    <>
+     <>
       <Navbar />
 
       <div className="min-h-screen bg-slate-50">
@@ -119,7 +120,7 @@ function Home() {
 
       <Footer />
     </>
-  );
+  )
 }
 
-export default Home;
+export default Homepage

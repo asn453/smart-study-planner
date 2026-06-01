@@ -4,3 +4,5 @@ from .models import PdfManagerModel
 class Pdfmanageradmin(admin.ModelAdmin):
     list_display= ['user','title','pdf','uploaded_time']
     search_fields = ['user__username','title']
+
+admin.site.register(PdfManagerModel,Pdfmanageradmin)

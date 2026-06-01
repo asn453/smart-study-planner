@@ -170,6 +170,3 @@ CLOUDINARY_STORAGE = {
 }
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-# Tell Django to use Cloudinary for any uploaded media/documents
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.RawMediaCloudinaryStorage'

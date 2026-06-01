@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 function Dashboard() {
   return (
     <>
-      <Navbar />
 
       <div className="min-h-screen bg-slate-50">
         {/* Hero Section */}

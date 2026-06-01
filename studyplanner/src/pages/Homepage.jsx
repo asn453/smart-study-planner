@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 
 function Homepage() {
   return (
      <>
-      <Navbar />
 
       <div className="min-h-screen bg-slate-50">
         <div className="max-w-7xl mx-auto px-8 py-20">

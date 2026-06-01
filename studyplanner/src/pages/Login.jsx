@@ -1,18 +1,22 @@
 import React, { useState } from "react";
+
 import { useNavigate, Link } from "react-router-dom";
+
 import api from "../services/api";
 
-function Login({ setToken }) { // <-- Accept setToken here
+function Login() {
   const navigate = useNavigate();
 
   const [data, setData] = useState({
     username: "",
+
     password: "",
   });
 
   const handleChange = (e) => {
     setData({
       ...data,
+
       [e.target.name]: e.target.value,
     });
   };
@@ -23,17 +27,14 @@ function Login({ setToken }) { // <-- Accept setToken here
     try {
       const response = await api.post("/api/login/", data);
 
-      // 1. Save keys to browser storage
       localStorage.setItem("token", response.data.access);
+
       localStorage.setItem("refresh", response.data.refresh);
 
-      // 2. Update React State instantly! This triggers Navbar to switch from "Login" to "Logout"
-      setToken(response.data.access);
-
-      // 3. Send user to their dashboard
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
+
       alert("Invalid Credentials");
     }
   };
@@ -45,6 +46,7 @@ function Login({ setToken }) { // <-- Accept setToken here
           <h1 className="text-3xl font-bold text-gray-800">
             Smart Study Planner
           </h1>
+
           <p className="text-gray-500 mt-2">Welcome back! Login to continue</p>
         </div>
 
@@ -53,6 +55,7 @@ function Login({ setToken }) { // <-- Accept setToken here
             <label className="block mb-2 text-sm font-medium text-gray-600">
               Username
             </label>
+
             <input
               type="text"
               name="username"
@@ -66,6 +69,7 @@ function Login({ setToken }) { // <-- Accept setToken here
             <label className="block mb-2 text-sm font-medium text-gray-600">
               Password
             </label>
+
             <input
               type="password"
               name="password"

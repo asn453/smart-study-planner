@@ -27,21 +27,23 @@ class PdfManager(ModelViewSet):
             return Response({"error": "Title and PDF file are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Explicit credentials config
+            # Explicit credentials configuration
             cloudinary.config(
                 cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
                 api_key=settings.CLOUDINARY_STORAGE['API_KEY'],
                 api_secret=settings.CLOUDINARY_STORAGE['API_SECRET']
             )
 
-            # 👇 FIX: Extract the raw file bytes content and read the file name extension
+            # 👇 FIX: Rewind the file pointer to byte 0 
+            # This ensures we don't accidentally upload a blank 0-byte file
+            pdf_file.seek(0)
             file_bytes = pdf_file.read()
             file_name = pdf_file.name
 
-            # Upload the clean byte stream with explicit metadata definitions
+            # Upload to Cloudinary securely
             upload_result = cloudinary.uploader.upload(
-                file_bytes,                 # 👈 Stream the exact binary data content
-                public_id=file_name,        # 👈 Forces Cloudinary to inherit the original file name extension
+                file_bytes,                 
+                public_id=file_name,        
                 resource_type="auto",      
                 folder="study_planners"   
             )

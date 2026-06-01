@@ -162,11 +162,13 @@ CSRF_TRUSTED_ORIGINS = [
 
 # Cloudinary Storage Configuration
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+    # Using os.environ.get fallback ensures Render dashboard configurations are read perfectly
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME') or env('CLOUDINARY_CLOUD_NAME', default=''),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY') or env('CLOUDINARY_API_KEY', default=''),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET') or env('CLOUDINARY_API_SECRET', default=''),
 
     'UPLOAD_PRESET': 'ml_default'
 }
 
+# Fix the trailing comma bug from your paste snippet to keep Django stable:
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

@@ -1,10 +1,12 @@
 # pdfmanager/views.py
+import cloudinary
 import cloudinary.uploader
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
 
 from .models import PdfManagerModel
 from .serializers import pdfSerializers
@@ -15,7 +17,6 @@ class PdfManager(ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]
 
     def get_queryset(self):
-        # Only fetch items uploaded by the logged-in user
         return PdfManagerModel.objects.filter(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
@@ -26,32 +27,43 @@ class PdfManager(ModelViewSet):
             return Response({"error": "Title and PDF file are required."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # 1. Upload to Cloudinary with 'auto' processing
+            # Explicit credentials config
+            cloudinary.config(
+                cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
+                api_key=settings.CLOUDINARY_STORAGE['API_KEY'],
+                api_secret=settings.CLOUDINARY_STORAGE['API_SECRET']
+            )
+
+            # 👇 FIX: Extract the raw file bytes content and read the file name extension
+            file_bytes = pdf_file.read()
+            file_name = pdf_file.name
+
+            # Upload the clean byte stream with explicit metadata definitions
             upload_result = cloudinary.uploader.upload(
-                pdf_file,
-                resource_type="auto",      # ✨ FIX 1: Keeps the .pdf extension viewable for Chrome
+                file_bytes,                 # 👈 Stream the exact binary data content
+                public_id=file_name,        # 👈 Forces Cloudinary to inherit the original file name extension
+                resource_type="auto",      
                 folder="study_planners"   
             )
             
-            # 2. Extract the generated url securely
             cloudinary_url = upload_result.get("secure_url")
 
-            # ✨ FIX 2: Stop silent failures. If the link is missing, force an error path!
             if not cloudinary_url:
-                raise Exception("Cloudinary did not return a valid secure URL string.")
+                raise Exception("Cloudinary upload completed but returned a blank secure URL.")
 
-            # 3. Save the actual text link inside the database URLField
+            # Save the clean link string to your DB
             pdf_instance = PdfManagerModel.objects.create(
                 user=request.user,
                 title=title,
                 pdf=cloudinary_url
             )
 
-            # 4. Return clean data back to React
             serializer = self.get_serializer(pdf_instance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            # Check your Render server dashboard log stream to see this message clearly if it breaks!
-            print(f"--- CLOUDINARY UPLOAD ERROR: {str(e)} ---")
-            return Response({"error": f"File storage upload failed: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            print(f"!!! CLOUDINARY ENGINE FAILURE: {str(e)} !!!")
+            return Response(
+                {"error": "File storage upload failed.", "details": str(e)}, 
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

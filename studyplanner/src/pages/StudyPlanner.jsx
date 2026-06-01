@@ -56,7 +56,7 @@ function StudyPlanner() {
   // 2. Handle explicit task deletion
   const deleteTask = async (item) => {
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete "${item.subject}"?`,
+      `Are you sure you want to delete "${item.subject}"?`
     );
     if (!confirmDelete) return;
 
@@ -71,8 +71,7 @@ function StudyPlanner() {
   // 3. Dynamic Progress Calculation
   const totalTasks = plans.length;
   const completedTasks = plans.filter((plan) => plan.completed).length;
-  const progressPercentage =
-    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+  const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -96,12 +95,8 @@ function StudyPlanner() {
         {/* Progress Bar Section */}
         <div className="bg-white p-6 rounded-3xl shadow-md mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-gray-700">
-              Overall Progress
-            </span>
-            <span className="text-sm font-bold text-slate-900">
-              {progressPercentage}% ({completedTasks}/{totalTasks})
-            </span>
+            <span className="text-sm font-semibold text-gray-700">Overall Progress</span>
+            <span className="text-sm font-bold text-slate-900">{progressPercentage}% ({completedTasks}/{totalTasks})</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
             <div
@@ -151,8 +146,8 @@ function StudyPlanner() {
                 <div
                   key={item.id}
                   className={`p-5 rounded-2xl shadow-md border transition duration-300 ${
-                    item.completed
-                      ? "bg-emerald-50/60 border-emerald-200"
+                    item.completed 
+                      ? "bg-emerald-50/60 border-emerald-200" 
                       : "bg-white border-transparent hover:shadow-xl"
                   }`}
                 >
@@ -165,22 +160,14 @@ function StudyPlanner() {
                         className="mt-1.5 h-5 w-5 cursor-pointer accent-emerald-600"
                       />
                       <div>
-                        <h3
-                          className={`font-bold text-lg transition duration-200 ${
-                            item.completed
-                              ? "line-through text-gray-400"
-                              : "text-gray-800"
-                          }`}
-                        >
+                        <h3 className={`font-bold text-lg transition duration-200 ${
+                          item.completed ? "line-through text-gray-400" : "text-gray-800"
+                        }`}>
                           📚 {item.subject}
                         </h3>
-                        <p
-                          className={`mt-1 transition duration-200 ${
-                            item.completed
-                              ? "line-through text-gray-400"
-                              : "text-gray-500"
-                          }`}
-                        >
+                        <p className={`mt-1 transition duration-200 ${
+                          item.completed ? "line-through text-gray-400" : "text-gray-500"
+                        }`}>
                           {item.topic}
                         </p>
                         {item.completed && (
@@ -197,21 +184,11 @@ function StudyPlanner() {
                       className="text-gray-400 hover:text-red-500 p-1 rounded-lg hover:bg-gray-100 transition duration-200"
                       title="Delete Task"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                        />
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                       </svg>
                     </button>
+
                   </div>
                 </div>
               ))}

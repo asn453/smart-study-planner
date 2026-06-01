@@ -3,20 +3,15 @@ from .models import PdfManagerModel
 from .serializers import pdfSerializers
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.exceptions import ValidationError
-# Create your views here.
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class PdfManager(ModelViewSet):
     serializer_class = pdfSerializers
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_queryset(self):
-        return PdfManagerModel.objects.filter(user = self.request.user)
+        return PdfManagerModel.objects.filter(user=self.request.user)
     
-    def perform_create(self,serializer):
-        serializer.save(user = self.request.user)
-
-    def create(self, request , *args , **kwargs):
-        if not request.data.get('title') or not request.FILES.get('pdf'):
-            raise ValidationError('name must be provided')
-        return super().create(request,*args,**kwargs)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

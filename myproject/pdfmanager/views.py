@@ -26,7 +26,7 @@ class PdfManager(ModelViewSet):
         try:
             upload_result = cloudinary.uploader.upload(
                 pdf_file,
-                resource_type="raw",      # Explicitly flags it as a PDF/document
+                resource_type="auto",      # Explicitly flags it as a PDF/document
                 folder="study_planners"   # Organizes it inside a folder in your media library
             )
             

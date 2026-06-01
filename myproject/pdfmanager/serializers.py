@@ -1,3 +1,4 @@
+# pdfmanager/serializers.py
 from rest_framework import serializers
 from .models import PdfManagerModel
 
@@ -6,9 +7,11 @@ class pdfSerializers(serializers.ModelSerializer):
         error_messages={"blank": "Hey! You forgot to provide a title for the PDF.", 
                         "required": "Hey! You forgot to provide a title for the PDF."}
     )
-    pdf = serializers.FileField(
-        error_messages={"blank": "Please upload a valid PDF file.", 
-                        "required": "Please upload a valid PDF file."}
+    
+    # ✨ FIX 3: Changed from FileField to URLField to protect the link string structure
+    pdf = serializers.URLField(
+        error_messages={"blank": "Please upload a valid PDF link.", 
+                        "required": "Please upload a valid PDF link."}
     )
 
     class Meta:

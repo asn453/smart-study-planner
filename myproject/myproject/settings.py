@@ -169,8 +169,4 @@ CLOUDINARY_STORAGE = {
     'UPLOAD_PRESET': 'ml_default'
 }
 
-STORAGES = {
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
